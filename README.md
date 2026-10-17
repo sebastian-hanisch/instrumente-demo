@@ -1,5 +1,7 @@
 # Instrumente: die Wirkung über einen Anstoß von außen – Streamlit-Demo
 
+**[→ Demo live ausprobieren](https://sebastianhanisch-instrumente-demo.streamlit.app/)**
+
 Neuntes Stück der Linie **Kausale Diagramme und Adjustierung** in der „Konzepte“-Reihe im Portfolio von [Sebastian Hanisch](https://sebastianhanisch.net) (Operations Research und Machine Learning). Nachfolger von [frontdoor-demo](https://github.com/sebastian-hanisch/frontdoor-demo): Dort lief die Wirkung über einen beobachteten Mediator. Hier gibt es keinen, aber einen Anstoß von außen, der nur über die Regel wirkt, und das Verhältnis seiner Wirkungen auf Regel und Ergebnis liefert die Wirkung der Regel, obwohl der Confounder verborgen bleibt.
 
 ## Kernfrage
@@ -101,4 +103,4 @@ Streamlit Cloud: Python 3.12.
 
 Gebaut mit Streamlit, Plotly, numpy, pandas und fpdf2.
 
-Diese Demo ist Teil des Portfolios von [Sebastian Hanisch](https://sebastianhanisch.net) – Operations Research und Machine Learning ([Über mich](https://sebastianhanisch.net/ueber-mich.html)). Mehr zu den Demos: [Interaktive Demos](https://sebastianhanisch.net/demos.html).
+Diese Demo ist Teil des Portfolios von [Sebastian Hanisch](https://sebastianhanisch.net) – Operations Research und Machine Learning ([Über mich](https://sebastianhanisch.net/ueber-mich.html)). Mehr zur Reihe: [Kausale Diagramme: von Konfundierung bis Wahl](https://sebastianhanisch.net/konzepte-kausale-diagramme.html).
