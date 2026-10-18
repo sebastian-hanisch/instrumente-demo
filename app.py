@@ -182,14 +182,14 @@ st.markdown("---")
 
 st.subheader("🔬 Experiment 1: Wie stark muss das Instrument sein?")
 res1 = _base()
-st.caption(f"Alle Annahmen erfüllt, n = {C.EXP_N}, {C.EXP_REPS} feste Wiederholungen je Stärke π des Instruments; die Wahrheit ist β = 1. Weil die Momente des 2SLS bei schwachem Instrument "
-           "nicht existieren, zählen Median und Quartile, nicht Mittel und Standardabweichung.")
+st.caption(f"Alle Annahmen erfüllt, n = {C.EXP_N}, {C.EXP_REPS} feste Wiederholungen je Stärke π des Instruments; die Wahrheit ist β = 1. Weil der 2SLS bei einem Instrument theoretisch "
+           "keine Momente hat (bei schwachem Instrument zeigt es sich in der Stichprobe), zählen Median und Quartile, nicht Mittel und Standardabweichung.")
 st.plotly_chart(build_base_chart(res1), width="stretch", key="base_chart")
 verdict(verdict_base(res1))
 st.dataframe(build_base_table(res1), hide_index=True, width="stretch")
 st.plotly_chart(build_weak_chart(res1), width="stretch", key="weak_chart")
 st.dataframe(build_interval_table(res1), hide_index=True, width="stretch")
-st.caption("Die Wald-Deckung bleibt bei schwachem Instrument hoch, weil das Intervall sehr breit wird: Die Deckung allein sagt nichts. Wer nur Läufe mit F über 10 behält, verzerrt "
+st.caption("Die Wald-Deckung bleibt bei schwachem Instrument hoch, bei gleichzeitig sehr breit werdendem Intervall: Die Deckung allein sagt nichts. Wer bei schwachem bis mittlerem Instrument nur Läufe mit F über 10 behält, verzerrt "
            "die Schätzung selbst (die letzten drei Spalten).")
 
 st.subheader("🔬 Experiment 2: Wenn eine Annahme verletzt ist")
@@ -235,10 +235,10 @@ st.markdown(
 | **Z wirkt nur über x auf y (Ausschlussrestriktion)** | Der Fehler ist g / π: Ein kleiner direkter Pfeil wird bei schwachem Instrument vervielfacht (Experiment 2). | Sensitivität und Falsifikation |
 | **Z ist unabhängig von der verborgenen Ursache** | Der 2SLS ist verzerrt; die Daten zeigen es nicht, die erste Stufe sieht die Verbindung sogar mit: Bei π = 0,2 und U → Z (0,3) steigt das erwartete F von 10 auf 64 (Experiment 2). | Sensitivität und Falsifikation |
 | **Z bewegt x genug (Relevanz)** | Bei F unter etwa 10 streut die Schätzung stark, das Intervall wird sehr breit oder unbeschränkt, die Vorauswahl nach F verzerrt selbst (Experiment 1). | nicht gebaut |
-| **Mehrere Instrumente lassen sich prüfen** | Der J-Test erkennt nur, wenn die Instrumente verschieden ungültig sind; sind alle gleich ungültig, ist er blind (Experiment 3). | Sensitivität und Falsifikation |
+| **Mehrere Instrumente lassen sich prüfen** | Der J-Test ist blind, wenn alle Instrumente dieselbe Verzerrung g / π erzeugen (zum Beispiel gleiche Verletzung bei gleicher Stärke, Experiment 3). | Sensitivität und Falsifikation |
 | **Die Wirkung ist für alle gleich** | Bei unterschiedlichen Wirkungen misst der Wald-Schätzer nur die Wirkung bei den Compliern, nicht die durchschnittliche (Experiment 4). | nicht gebaut |
 | **Die Struktur ist bekannt** | Keine der Annahmen lässt sich aus den Daten prüfen; ein falsches Diagramm gibt eine sichere, aber falsche Zahl. | Wie falsch darf das Diagramm sein? |
-| **Es gibt überhaupt ein Instrument** | In nur etwa jedem zehnten Zufallsdiagramm mit verborgener Ursache existiert eines (Experiment 5). | Wann geht es gar nicht? |
+| **Es gibt überhaupt ein Instrument** | Im Zufallsmodell von Experiment 5 (sieben Knoten, Kantenwahrscheinlichkeit 0,25 bis 0,5, verborgene Ursache) hat etwa jedes zehnte Diagramm ein Instrument; der Anteil hängt stark von Größe und Dichte der Diagramme ab. | Wann geht es gar nicht? |
 """
 )
 
@@ -256,13 +256,13 @@ $\hat X$ aus der ersten Stufe $X \sim Z_1 + Z_2$. Der Standardfehler benutzt die
 **Erste Stufe.** $F = t^2$ der Steigung von $X$ auf $Z$ (bei einem Instrument); erwartet etwa $n R^2/(1 - R^2)$ mit $R^2 = \mathrm{Korr}(Z, X)^2$.
 
 **Anderson-Rubin-Menge.** $\{\beta_0 : |t(\beta_0)| \le 1{,}96\}$, wobei $t(\beta_0)$ die $t$-Statistik der Regression von $Y - \beta_0 X$ auf $Z$ ist; eine quadratische Ungleichung in $\beta_0$,
-die Menge ist ein Intervall, die Außenseite eines Intervalls (unbeschränkt) oder die ganze Gerade. Sie hängt nicht von der Stärke des Instruments ab.
+die Menge ist ein Intervall, die Außenseite eines Intervalls (unbeschränkt) oder die ganze Gerade. Ihre Deckung hängt nicht von der Stärke des Instruments ab, ihre Form schon.
 
-**Verzerrung ohne die Annahmen.** Mit einem direkten Pfeil $g$ von $Z$ auf $Y$ ist der Grenzwert $\beta + g/\pi$; mit einer Verbindung $h$ von $U$ zu $Z$ ist er verzerrt, solange $Z$ mit $U$ zusammenhängt.
+**Verzerrung ohne die Annahmen.** Mit einem direkten Pfeil $g$ von $Z$ auf $Y$ ist der Grenzwert $\beta + g/\pi$; mit einer Verbindung $h$ von $U$ zu $Z$ ist er verzerrt, solange $Z$ mit dem Fehlerterm von $Y$ zusammenhängt (hier: $h$ und die Stärke des Confounders beide ungleich 0).
 
 **J-Test (Sargan).** $J = n R^2$ der Regression der 2SLS-Reste auf die Instrumente, unter der Nullhypothese gültiger Instrumente $\chi^2$ mit (Zahl der Instrumente − 1) Freiheitsgraden.
 
-**LATE.** Mit binärem $Z$ und $X$ und ohne Defier misst $(E[Y|Z=1] - E[Y|Z=0])/(E[X|Z=1] - E[X|Z=0])$ die mittlere Wirkung bei den Compliern.
+**LATE.** Mit zufällig zugeteiltem binärem $Z$ (unabhängig, nur über $X$ wirkend, relevant), binärem $X$ und ohne Defier misst $(E[Y|Z=1] - E[Y|Z=0])/(E[X|Z=1] - E[X|Z=0])$ die mittlere Wirkung bei den Compliern.
 
 **Literatur.** J. Angrist, G. Imbens, D. Rubin, *Identification of causal effects using instrumental variables*, JASA 91, 1996; D. Staiger, J. Stock, *Instrumental variables regression with weak
 instruments*, Econometrica 65, 1997; J. Pearl, *Causality*, 2. Auflage, 2009; T. Anderson, H. Rubin, *Estimation of the parameters of a single equation in a complete system of stochastic

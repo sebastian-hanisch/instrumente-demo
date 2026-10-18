@@ -93,7 +93,7 @@ def analyse(s: Settings) -> Analysis:
 
 
 def summarize(values, truth: float) -> dict:
-    """Median, Streuung und Quartile: Mittel und SD allein sind bei schwachem Instrument wertlos (die Momente des 2SLS existieren nicht)."""
+    """Median, Streuung und Quartile: Mittel und SD allein sind bei schwachem Instrument wertlos (der 2SLS hat bei einem Instrument theoretisch keine Momente)."""
     v = np.asarray(values, dtype=float)
     q1, med, q3 = np.percentile(v, [25, 50, 75])
     return {"mean": float(v.mean()), "median": float(med), "bias": float(v.mean() - truth), "median_bias": float(med - truth), "sd": float(v.std()), "iqr": float(q3 - q1)}
@@ -276,7 +276,7 @@ def verdict_violations(rows: list) -> tuple[str, str]:
     by = {r["label"]: r for r in rows}
     strong, weak = by["Z wirkt direkt auf y (0,1), π = 1,0"], by["Z wirkt direkt auf y (0,1), π = 0,1"]
     return "info", (f"Ein direkter Pfeil von 0,1 verfehlt den 2SLS bei π = 1,0 um {signed(strong['iv_error'])}, bei π = 0,1 um {signed(weak['iv_error'])}: Der Fehler ist g / π. "
-                    f"Die Stärke des Confounders ändert nichts ({signed(by['starker Confounder (U wirkt mit 2,0)']['iv_error'])}).")
+                    f"Die Stärke des Confounders ändert den Grenzwert des 2SLS nicht ({signed(by['starker Confounder (U wirkt mit 2,0)']['iv_error'])}).")
 
 
 def verdict_overid(rows: list) -> tuple[str, str]:

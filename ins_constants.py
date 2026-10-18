@@ -80,5 +80,5 @@ PRESET_HELP = {
     "Grenzfall (F um 10)": "Z bewegt x gerade so (π = 0,2, F etwa 10): Die Faustregel F > 10 ist knapp erfüllt, die Streuung noch deutlich zu groß.",
     "Ausschluss verletzt": "Z wirkt auch direkt auf y: Die Ausschlussrestriktion ist verletzt, der Fehler ist g / π. Bei schwachem Instrument wird er größer.",
     "Instrument mit Confounder verbunden": "Die Standortqualität U beeinflusst auch Z: Die Unabhängigkeit ist verletzt, der 2SLS ist verzerrt.",
-    "Starker Confounder": "Eine stärkere verborgene Ursache verzerrt den naiven Vergleich stark, den 2SLS nicht: Die Stärke des Confounders ist egal, solange Z gültig ist.",
+    "Starker Confounder": "Eine stärkere verborgene Ursache verzerrt den naiven Vergleich stark, den 2SLS nicht: Die Verzerrung des 2SLS hängt nicht von der Stärke des Confounders ab, solange Z gültig ist; seine Streuung wächst aber.",
 }
